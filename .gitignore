@@ -41,3 +41,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# Secrets (do not commit)
+src/main/resources/application.properties
+*.env
