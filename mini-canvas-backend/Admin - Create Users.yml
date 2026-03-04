@@ -1,0 +1,27 @@
+info:
+  name: Admin - Create Users
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: "{{baseUrl}}/admin/users"
+  headers:
+    - name: Authorization
+      value: Bearer {{token}}
+  body:
+    type: json
+    data: |-
+      {
+        "email": "student2@test.com",
+        "password": "Test1234!",
+        "fullName": "Student Two",
+        "role": "STUDENT"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
