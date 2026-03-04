@@ -20,4 +20,5 @@ CREATE TABLE dbo.user_roles (
                                 CONSTRAINT fk_user_roles_role FOREIGN KEY (role_id) REFERENCES dbo.roles(id)
 );
 
+//SEED THE ROLES
 INSERT INTO dbo.roles(name) VALUES ('ADMIN'), ('TEACHER'), ('STUDENT')

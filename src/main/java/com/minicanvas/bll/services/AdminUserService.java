@@ -23,6 +23,7 @@ public class AdminUserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    //Validates required fields
     public UserEntity createUser(CreateUserRequest req) {
         if (req.email == null || req.email.isBlank()) {
             throw new IllegalArgumentException("email is required");
