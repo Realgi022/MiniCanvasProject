@@ -28,6 +28,13 @@ dependencies {
     runtimeOnly("com.microsoft.sqlserver:mssql-jdbc")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.11.0")
+
+    testImplementation("org.springframework.security:spring-security-test")
+
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 
