@@ -2,7 +2,7 @@ name: Deploy MiniCanvas Backend
 
 on:
   workflow_run:
-    workflows: "CI"
+    workflows: ["CI"]
     types:
       - completed
 
@@ -12,16 +12,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Setup SSH
+      - name: Configure SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H "${{ secrets.SERVER_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: Run deploy script on server
+      - name: Deploy to EduCloud VM
         run: |
           ssh -i ~/.ssh/id_ed25519 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "/opt/backend-minicanvas/deploy.sh"
