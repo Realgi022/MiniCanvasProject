@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: "{{baseUrl}}/admin/users"
+  url: http://145.220.72.161/api/admin/users
   headers:
     - name: Authorization
       value: Bearer {{token}}
@@ -13,9 +13,9 @@ http:
     type: json
     data: |-
       {
-        "email": "student52@test.com",
-        "password": "Test126776734!",
-        "fullName": "Student Two",
+        "email": "realgihila@unidumb.com",
+        "password": "rei234hila.",
+        "fullName": "Student One",
         "role": "STUDENT"
       }
   auth: inherit

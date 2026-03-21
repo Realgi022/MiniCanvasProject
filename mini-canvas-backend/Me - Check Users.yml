@@ -5,10 +5,10 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/me"
+  url: http://145.220.72.161/api/me
   headers:
     - name: Authorization
-      value: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZWFjaGVyM0B0ZXN0LmNvbSIsInJvbGVzIjpbIlRFQUNIRVIiXSwiaWF0IjoxNzczNTg1ODA3LCJleHAiOjE3NzM1OTMwMDd9.sEk1MGxJbVyelKtPS8r5fjfk50eph8gOHm-vD_Piiaw
+      value: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5ubCIsInJvbGVzIjpbIkFETUlOIl0sImlhdCI6MTc3NDA1NjM1MSwiZXhwIjoxNzc0MDYzNTUxfQ.3F0ExIyOsYCRu7UDi5Z9wPVN3GUSB5DFkg0zb5TkSDw
   auth: inherit
 
 settings:

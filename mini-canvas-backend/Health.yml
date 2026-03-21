@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/health"
+  url: http://145.220.72.161/api/health
   auth: inherit
 
 settings:
