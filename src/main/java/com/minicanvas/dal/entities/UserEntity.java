@@ -25,8 +25,15 @@ public class UserEntity {
     @Column(nullable = false)
     private Boolean enabled = true;
 
-    @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+    }
 
 
     @ManyToMany(fetch = FetchType.EAGER)
