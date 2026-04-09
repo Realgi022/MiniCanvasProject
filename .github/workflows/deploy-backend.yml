@@ -24,7 +24,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/MiniCanvasProject:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/minicanvasproject:latest
 
   deploy:
         runs-on: ubuntu-latest
@@ -41,7 +41,7 @@ jobs:
                   echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
                   
                   # Pull the latest image
-                  docker pull ${{ secrets.DOCKER_USERNAME }}/MiniCanvasProject:latest
+                  docker pull ${{ secrets.DOCKER_USERNAME }}/minicanvasproject:latest
                   
                   # Stop and remove existing container if it exists
                   docker stop my-running-app || true
@@ -53,6 +53,6 @@ jobs:
                     --name my-running-app \
                     --restart always \
                     -p 80:8080 \
-                    ${{ secrets.DOCKER_USERNAME }}/MiniCanvasProject:latest
+                    ${{ secrets.DOCKER_USERNAME }}/minicanvasproject:latest
 
 #          ssh -i ~/.ssh/id_ed25519 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "/opt/backend-minicanvas/deploy.sh"
