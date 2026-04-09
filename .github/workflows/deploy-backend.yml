@@ -1,4 +1,4 @@
-name: Deploy MiniCanvas Backend
+name: Deploy MiniCanvasProject
 
 on:
   workflow_run:
@@ -42,15 +42,15 @@ jobs:
             docker pull ${{ secrets.DOCKER_USERNAME }}/minicanvasproject:latest
             
             # Stop and remove existing container
-            docker stop minicanvas-backend || true
-            docker rm minicanvas-backend || true
+            docker stop minicanvasproject || true
+            docker rm minicanvasproject || true
             
             # Run the container
             # Java Spring Boot usually runs on 8080 internally
             docker run -d \
-              --name minicanvas-backend \
+              --name minicanvasproject \
               --restart always \
-              -p 80:8080 \
+              -p 80:8081 \
               ${{ secrets.DOCKER_USERNAME }}/minicanvasproject:latest
 #wassap
 #          ssh -i ~/.ssh/id_ed25519 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "/opt/backend-minicanvas/deploy.sh"
