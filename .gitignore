@@ -44,6 +44,5 @@ bin/
 .DS_Store
 
 # Secrets (do not commit)
-src/main/resources/application.properties
 src/main/resources/application-local.properties
 *.env
