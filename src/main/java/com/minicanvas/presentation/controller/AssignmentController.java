@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import com.minicanvas.presentation.dto.grade.GradeSubmissionRequest;
 
 @RestController
 @RequestMapping("/assignments")
@@ -143,6 +144,20 @@ public class AssignmentController {
                             "attachment; filename=\"" + submission.getOriginalFileName() + "\""
                     )
                     .body(resource);
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(new Object() {
+                public final String error = ex.getMessage();
+            });
+        }
+    }
+    @PutMapping("/submissions/{submissionId}/grade")
+    @PreAuthorize("hasRole('TEACHER')")
+    public ResponseEntity<?> gradeSubmission(
+            @PathVariable Long submissionId,
+            @RequestBody GradeSubmissionRequest request
+    ) {
+        try {
+            return ResponseEntity.ok(assignmentService.gradeSubmission(submissionId, request));
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(new Object() {
                 public final String error = ex.getMessage();

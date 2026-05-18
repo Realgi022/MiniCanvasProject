@@ -18,4 +18,6 @@ public interface AssignmentSubmissionRepository extends JpaRepository<Assignment
     );
 
     boolean existsByAssignmentIdAndStudentId(Long assignmentId, Long studentId);
+
+    List<AssignmentSubmissionEntity> findByStudentEmailOrderBySubmittedAtDesc(String email);
 }

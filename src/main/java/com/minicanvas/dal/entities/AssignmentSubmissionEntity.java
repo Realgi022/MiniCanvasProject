@@ -1,6 +1,7 @@
 package com.minicanvas.dal.entities;
 
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -48,6 +49,19 @@ public class AssignmentSubmissionEntity {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Column(name = "grade", precision = 4, scale = 2)
+    private BigDecimal grade;
+
+    @Column(columnDefinition = "NVARCHAR(MAX)")
+    private String feedback;
+
+    @Column(name = "graded_at")
+    private LocalDateTime gradedAt;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "graded_by_user_id")
+    private UserEntity gradedBy;
 
     @PrePersist
     public void prePersist() {
@@ -137,5 +151,37 @@ public class AssignmentSubmissionEntity {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public BigDecimal getGrade() {
+        return grade;
+    }
+
+    public void setGrade(BigDecimal grade) {
+        this.grade = grade;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
+
+    public LocalDateTime getGradedAt() {
+        return gradedAt;
+    }
+
+    public void setGradedAt(LocalDateTime gradedAt) {
+        this.gradedAt = gradedAt;
+    }
+
+    public UserEntity getGradedBy() {
+        return gradedBy;
+    }
+
+    public void setGradedBy(UserEntity gradedBy) {
+        this.gradedBy = gradedBy;
     }
 }

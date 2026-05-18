@@ -12,6 +12,8 @@ import com.minicanvas.presentation.dto.assignment.AssignmentResponse;
 import com.minicanvas.presentation.dto.assignment.CreateAssignmentRequest;
 import com.minicanvas.presentation.dto.assignment.SubmissionResponse;
 import com.minicanvas.presentation.dto.assignment.UpdateAssignmentRequest;
+import com.minicanvas.presentation.dto.grade.GradeResponse;
+import com.minicanvas.presentation.dto.grade.GradeSubmissionRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -21,8 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -192,7 +196,7 @@ public class AssignmentService {
 
             return toSubmissionResponse(saved);
         } catch (Exception ex) {
-            logger.error("Assignment request failed");
+            logger.error("Failed to upload assignment file", ex);
             throw new IllegalArgumentException("Failed to upload file");
         }
     }
@@ -216,6 +220,40 @@ public class AssignmentService {
 
         return submissions.stream()
                 .map(this::toSubmissionResponse)
+                .toList();
+    }
+
+    public SubmissionResponse gradeSubmission(Long submissionId, GradeSubmissionRequest request) {
+        if (request.grade == null) {
+            throw new IllegalArgumentException("Grade is required");
+        }
+
+        if (request.grade.compareTo(BigDecimal.ZERO) < 0 ||
+                request.grade.compareTo(BigDecimal.TEN) > 0) {
+            throw new IllegalArgumentException("Grade must be between 0 and 10");
+        }
+
+        UserEntity teacher = getCurrentUser();
+
+        AssignmentSubmissionEntity submission = submissionRepository.findById(submissionId)
+                .orElseThrow(() -> new IllegalArgumentException("Submission not found"));
+
+        submission.setGrade(request.grade);
+        submission.setFeedback(request.feedback);
+        submission.setGradedAt(LocalDateTime.now());
+        submission.setGradedBy(teacher);
+
+        AssignmentSubmissionEntity saved = submissionRepository.save(submission);
+
+        return toSubmissionResponse(saved);
+    }
+
+    public List<GradeResponse> getMyGrades() {
+        UserEntity student = getCurrentUser();
+
+        return submissionRepository.findByStudentEmailOrderBySubmittedAtDesc(student.getEmail())
+                .stream()
+                .map(this::toGradeResponse)
                 .toList();
     }
 
@@ -265,6 +303,8 @@ public class AssignmentService {
     }
 
     private SubmissionResponse toSubmissionResponse(AssignmentSubmissionEntity submission) {
+        UserEntity gradedBy = submission.getGradedBy();
+
         return new SubmissionResponse(
                 submission.getId(),
                 submission.getAssignment().getId(),
@@ -279,7 +319,32 @@ public class AssignmentService {
                 submission.getSubmittedAt(),
                 submission.getUpdatedAt(),
                 "/assignments/submissions/" + submission.getId() + "/preview",
-                "/assignments/submissions/" + submission.getId() + "/download"
+                "/assignments/submissions/" + submission.getId() + "/download",
+                submission.getGrade(),
+                submission.getFeedback(),
+                submission.getGradedAt(),
+                gradedBy != null ? gradedBy.getEmail() : null,
+                gradedBy != null ? gradedBy.getFullName() : null
+        );
+    }
+
+    private GradeResponse toGradeResponse(AssignmentSubmissionEntity submission) {
+        UserEntity gradedBy = submission.getGradedBy();
+
+        return new GradeResponse(
+                submission.getId(),
+                submission.getAssignment().getId(),
+                submission.getAssignment().getTitle(),
+                submission.getAssignment().getClassEntity().getName(),
+                submission.getStudent().getId(),
+                submission.getStudent().getEmail(),
+                submission.getStudent().getFullName(),
+                submission.getGrade(),
+                submission.getFeedback(),
+                submission.getSubmittedAt(),
+                submission.getGradedAt(),
+                gradedBy != null ? gradedBy.getEmail() : null,
+                gradedBy != null ? gradedBy.getFullName() : null
         );
     }
 }
