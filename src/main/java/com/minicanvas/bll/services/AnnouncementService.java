@@ -66,11 +66,10 @@ public class AnnouncementService {
     }
 
     public void deleteAnnouncement(Long id) {
-        if (!announcementRepository.existsById(id)) {
-            throw new IllegalArgumentException("Announcement not found");
-        }
+        AnnouncementEntity announcement = announcementRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Announcement not found"));
 
-        announcementRepository.deleteById(id);
+        announcementRepository.delete(announcement);
     }
 
     private void validateRequest(String title, String content) {
