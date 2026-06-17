@@ -5,13 +5,13 @@ info:
 
 http:
   method: POST
-  url: http://145.220.72.161/api/auth/login
+  url: http://localhost:8081/auth/login
   body:
     type: json
     data: |-
       {
-        "email": "admin@admin.nl",
-        "password": "rei234hila."
+        "email": "realgihila@gmail.com",
+        "password": "123"
       }
   auth: inherit
 

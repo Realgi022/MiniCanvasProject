@@ -3,7 +3,7 @@ package com.minicanvas.dal.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "roles", schema = "dbo")
+@Table(name = "roles")
 public class RoleEntity {
 
     @Id

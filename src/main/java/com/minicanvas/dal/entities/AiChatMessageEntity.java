@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "ai_chat_messages", schema = "dbo")
+@Table(name = "ai_chat_messages")
 public class AiChatMessageEntity {
 
     @Id

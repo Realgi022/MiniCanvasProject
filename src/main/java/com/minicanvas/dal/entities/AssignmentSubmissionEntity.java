@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(
         name = "assignment_submissions",
-        schema = "dbo",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"assignment_id", "student_user_id"})
         }

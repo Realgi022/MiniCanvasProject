@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "assignments", schema = "dbo")
+@Table(name = "assignments")
 public class AssignmentEntity {
 
     @Id
