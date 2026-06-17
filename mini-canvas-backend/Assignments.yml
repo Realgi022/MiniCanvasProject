@@ -1,0 +1,26 @@
+info:
+  name: Assignments
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: http://localhost:8081/assignments
+  body:
+    type: json
+    data: |-
+      {
+        "classId": 2,
+        "title": "Portfolio Reflection",
+        "description": "Upload your portfolio reflection document.",
+        "dueAt": "2026-05-20T23:59:00"
+      }
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huQHVuaS5ubCIsInJvbGVzIjpbIlRFQUNIRVIiXSwiaWF0IjoxNzc4NTExNTI5LCJleHAiOjE3Nzg1MTg3Mjl9.BdFRX8VWFBFlltx_1OZ9Dk-A1R4cY3ybh_35OyQHmRw
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
